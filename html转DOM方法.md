@@ -53,14 +53,15 @@ return htmlWrapDiv.innerHTML.replace(/<br>|<hr>/g, '')
 ```
 
 
-##应用
+#### 4. 应用
 去除html里多余的无用的标签或者注释等，省去用正则表达式，因为可能存在`<br/><hr/>`等不好筛选
+- 常规法：遍历，根据tagname剔除
+- 快速剔除法：innerHMTL赋值法
 ```
 const parser = new DOMParser()
 const dom = parser.parseFromString(html, 'text/html')
 return dom && dom.documentElement ? dom.documentElement.innerHTML.replace(/<br>|<hr>/g, '') : ''
 ```
-
 
 ##### 参考
 
