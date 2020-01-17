@@ -1,14 +1,15 @@
-## 方法
+## 常用方法
 
 1.  创建一个元素 `div=document.createElement('div');div.innerHTML=html`
-2.  DOMParser `domParser=new DOMParser();domParser.parseFromString.(html,'text/html')`
-3.  新建个 Document 对象 `document.implementation.createHTMLelement`
+2.  `document.createDocumentFragment()` or `document.createRange().createContextualFragment(html)`
+3.  DOMParser `domParser=new DOMParser();domParser.parseFromString.(html,'text/html')`
+4.  新建个 Document 对象 `document.implementation.createHTMLElement`
 
-**注意**：方法 ① 相当于在当前`window.document`上`createElement`，创建的 div 是要被浏览器遍历的，而方法 ②③ 是新创建一个 document 与浏览器里的不是一个，和浏览器没关系，浏览器也管不到了
+**注意**：方法 ① ② 相当于在当前`window.document`上`createElement`，创建的 div 是要被浏览器遍历的，而方法 ③④ 是新创建一个 document 与浏览器里的不是一个，和浏览器没关系，浏览器也不会遍历。这种区别可以在有`<img>`标签的 html 中有所体现。
 
 ## 比较
 
-##### 1. 方法 ①
+#### 1. 方法 ①
 
 - 优点：处理快速，代码简单
 - 缺点：浏览器会先遍历执行一遍。因为是在浏览器的 dom 对象里生成的，因此浏览器会遍历一遍，里面的图片都会预加载（即使当前页无用）或者 script 标签会执行。（当然如果所加载的图片都是当前页需要的，比如项目里的全部数据加载。那由于图片预加载一遍之后路径相同，就不会再加载了）
@@ -33,7 +34,7 @@
 
 构建渲染树时父元素设为 none，则默认子元素也不渲染，也就遍历不到了，因此不会渲染。
 
-##### 2. 使用`domparser api/document.implementation.createHTMLelement`
+#### 2. 使用`domparser api/document.implementation.createHTMLelement`
 
 好处：
 
@@ -44,7 +45,11 @@
 
 所以有快速生成的需求时，尽量不要用 DOMParser
 
-##### 3. 试验（项目里打`console.time`和`console.timeEnd`）
+#### 3. 文档片段方法
+
+好处是，性能最优，因为文档片段存在于内存中，子元素插入到问的文档片段时不会引起回流，有较好的性能。
+
+#### 4. 试验（项目里打`console.time`和`console.timeEnd`）
 
 ```
 //1.DOMParser----->用时大概75ms
@@ -97,6 +102,12 @@ if (html && (/img/).test(html) && !(/img.*src=.*http.*(png|jpg)$/g).test(html)) 
 const parser = new DOMParser()
 const dom = parser.parseFromString(html, 'text/html')
 return dom && dom.documentElement ? dom.documentElement.innerHTML.replace(/<br>|<hr>/g, '') : ''
+```
+
+- 简单剔除（正则）
+
+```
+html.replace(/<br.*\/?>|<hr.*\/?>/gi, '')
 ```
 
 ##### 参考
