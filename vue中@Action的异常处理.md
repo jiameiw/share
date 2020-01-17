@@ -79,4 +79,5 @@ try {
 ### 参考
 
 [https://github.com/championswimmer/vuex-module-decorators/issues/26](https://github.com/championswimmer/vuex-module-decorators/issues/26)
+
 [https://github.com/championswimmer/vuex-module-decorators/blob/master/src/action.ts](https://github.com/championswimmer/vuex-module-decorators/blob/master/src/action.ts)
