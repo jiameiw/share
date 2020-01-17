@@ -76,6 +76,7 @@ try {
 需要成功获取接口数据后才更改某一状态或者某一数据值的，不应该将代码写在 trycatch 后，因为即使抛出错误，catch 后的代码也会被执行，所以对于这种代码可以写在 try 语句里，await 后。
 比如：批改页面打 tag，需要在成功将 tag 传给后台成功后再变为选中的蓝色状态，以及做后面的操作。
 
-参考：
+### 参考
+
 [https://github.com/championswimmer/vuex-module-decorators/issues/26](https://github.com/championswimmer/vuex-module-decorators/issues/26)
 [https://github.com/championswimmer/vuex-module-decorators/blob/master/src/action.ts](https://github.com/championswimmer/vuex-module-decorators/blob/master/src/action.ts)
