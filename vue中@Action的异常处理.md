@@ -1,6 +1,6 @@
 # vue 中@Action 的异常处理
 
-#### 1. 知识点总结：
+#### 1. 知识点：
 
 1. 在某行代码有错误抛出后，后面的代码都不会被执行，直接阻断
 2. try-catch 语句里的代码有一行有错误，后面也阻断，但是跳出 catch 语句后面的代码依然可以执行，因为抛出的错误被 catch 接到了
@@ -32,24 +32,24 @@
 ```
 //页面请求接口
 try {
-      await this.fetchRecommendedQuestions(params)
+      await this.fetchR(params)
     } catch (e) {
       if (e && e.isHandled) {
         return
       }
-      this.$message.error('获取变式题失败')
+      this.$message.error('获取失败')
     }
 
 //store里请求数据
  @Action({ rawError: true })
-  async fetchRecommendedQuestions(
-    params: RecommendedQuestionsParams,
-  ): Promise<RecommendedQuestions[]> {
-    const url = shouyueApi.variantQuestion.recommendedQuestions()
+  async fetchR(
+    params: params,
+  ): Promise<R[]> {
+    const url = api.v.r()
     const response = await axios.post(url, params)
     const { data } = response
-    this.context.commit('setRecommendedQuestions', {
-      type: params.recommendedType,
+    this.context.commit('setR', {
+      type: params.re,
       data,
     })
     return data
