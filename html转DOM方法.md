@@ -1,5 +1,4 @@
 ## 常用方法
-
 1.  创建一个元素 `div=document.createElement('div');div.innerHTML=html`
 2.  `document.createDocumentFragment()` or `document.createRange().createContextualFragment(html)`
 3.  DOMParser `domParser=new DOMParser();domParser.parseFromString.(html,'text/html')`
@@ -13,7 +12,7 @@
 
 - 优点：处理快速，代码简单
 - 缺点：浏览器会先遍历执行一遍。因为是在浏览器的 dom 对象里生成的，因此浏览器会遍历一遍，里面的图片都会预加载（即使当前页无用）或者 script 标签会执行。（当然如果所加载的图片都是当前页需要的，比如项目里的全部数据加载。那由于图片预加载一遍之后路径相同，就不会再加载了）
-
+···
 **这里插入一个关于图片预加载问题**
 
 【1】问题：设置`display：none`的 img 还会加载吗？会的
@@ -95,23 +94,12 @@ if (html && (/img/).test(html) && !(/img.*src=.*http.*(png|jpg)$/g).test(html)) 
     traverseParent(dom.body)
 }
 ```
-
 - 快速剔除法：innerHMTL 赋值法
-
 ```
 const parser = new DOMParser()
 const dom = parser.parseFromString(html, 'text/html')
 return dom && dom.documentElement ? dom.documentElement.innerHTML.replace(/<br>|<hr>/g, '') : ''
 ```
-
-- 简单剔除（正则）
-
-```
-html.replace(/<br.*\/?>|<hr.*\/?>/gi, '')
-```
-
 ##### 参考
-
 [DOMParser WEB API](https://developer.mozilla.org/zh-CN/docs/Web/API/DOMParser)
-
 [web 图片资源加载与渲染时机](https://segmentfault.com/a/1190000010032501)
